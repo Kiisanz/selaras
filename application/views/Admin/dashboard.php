@@ -83,9 +83,9 @@
 
         <div class="row">
             <!-- OLAP Chart -->
-            <div class="col-12 col-lg-8">
-                <div class="card">
-                    <div class="card-body">
+            <div class="col-12 col-lg-8 d-flex flex-column">
+                <div class="card flex-grow-1">
+                    <div id="topProductChartContainer" class="card-body">
                         <h5 class="card-title">Grafik OLAP</h5>
                         <canvas id="topProductChart"></canvas>
                     </div>
@@ -93,15 +93,16 @@
             </div><!-- End OLAP Chart -->
 
             <!-- Pie Chart for Pelanggan -->
-            <div class="col-8 col-lg-4">
-                <div class="card">
+            <div class="col-8 col-lg-4 d-flex flex-column">
+                <div class="card flex-grow-1">
                     <div class="card-body">
                         <h5 class="card-title">Distribusi Pelanggan <span>| Berdasarkan Alamat</span></h5>
                         <canvas id="customerPieChart" width="100" height="100"></canvas>
                     </div>
                 </div>
-            </div>
+            </div><!-- End Pie Chart -->
         </div>
+
 
         <!-- Recent Sales -->
         <div class="col-12">
@@ -141,7 +142,6 @@
                                 }
                             }
 
-                            // Mengurutkan produk berdasarkan total terbanyak
                             $allProducts = [];
                             foreach ($combinedProducts as $productName => $sizes) {
                                 foreach ($sizes as $size => $product) {
@@ -268,10 +268,22 @@
         const addressLabels = Object.keys(addressData).filter(address => address !== null && address !== undefined);
         const addressValues = addressLabels.map(address => addressData[address]);
 
-        if (filteredProductNames.length === 0) {
-            console.log("No data after filtering!");
-            return;
-        }
+        // if (filteredProductNames.length === 0) {
+        //     console.log("No data after filtering!");
+        //     const chartContainer = document.getElementById('topProductChartContainer');
+
+        //     if (topProductChart) {
+        //         topProductChart.destroy();
+        //     }
+
+        //     chartContainer.innerHTML = "<p class='no-data-message text-center' style='font-size: 30px; font-weight: bold;'>No data available</p>";
+        //     chartContainer.style.display = "flex";
+        //     chartContainer.style.alignItems = "center";
+        //     chartContainer.style.justifyContent = "center";
+        //     chartContainer.style.height = "300px";
+        //     return;
+        // }
+
 
         if (topProductChart) {
             topProductChart.destroy();
