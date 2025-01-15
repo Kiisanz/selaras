@@ -56,7 +56,7 @@
 
 		<li class="nav-item">
 			<a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-				<i class="bi bi-bag-check"></i><span>Transaksi</span><span id="indicator-badge" class="btn mx-3 btn-primary rounded-circle d-none justify-content-center align-items-center" style="width: 22px; height: 22px; font-size: 12px;">
+				<i class="bi bi-bag-check"></i><span>Transaksi</span><span id="indicator-badges" class="btn mx-3 btn-primary rounded-circle d-none justify-content-center align-items-center" style="width: 22px; height: 22px; font-size: 12px;">
 				</span>
 				<i class="bi bi-chevron-down ms-auto"></i>
 			</a>
@@ -139,9 +139,9 @@
 				dataType: 'json',
 				success: function(response) {
 					if (response.jumlah_pesanan == "0") {
-						$('#indicator-badge').addClass("d-none");
+						$('#indicator-badges').addClass("d-none");
 					} else {
-						$('#indicator-badge').removeClass('d-none').addClass('d-flex').text(response.jumlah_pesanan)
+						$('#indicator-badges').removeClass('d-none').addClass('d-flex').text(response.jumlah_pesanan)
 					}
 				},
 				error: function(xhr, status, error) {

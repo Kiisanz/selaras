@@ -27,6 +27,7 @@ class Custome extends CI_Controller
 				'kategori' => $this->mKelolaDataMaster->select_kategori(),
 				'kain' => $this->mKelolaDataMaster->select_kain()
 			);
+
 			$this->load->view('Pelanggan/Layouts/head');
 			$this->load->view('Pelanggan/Layouts/topend');
 			$this->load->view('Pelanggan/Layouts/categori', $data);
@@ -49,6 +50,7 @@ class Custome extends CI_Controller
 				$this->load->view('Pelanggan/custome',  $error);
 			} else {
 				$upload_data = $this->upload->data();
+
 				$data = array(
 					'id_transaksi' => $this->input->post('id_transaksi'),
 					'id_customer' => $this->session->userdata('id'),
@@ -76,6 +78,8 @@ class Custome extends CI_Controller
 					'gambar_model' => $upload_data['file_name'],
 					'qty_custom' => $this->input->post('qty')
 				);
+
+
 				$this->db->insert('custom', $custom);
 
 				$this->session->set_flashdata('success', 'Pesanan Anda Berhasil Disimpan!');
@@ -83,6 +87,7 @@ class Custome extends CI_Controller
 			}
 		}
 	}
+
 	public function detail_custome($id)
 	{
 		$data = array(

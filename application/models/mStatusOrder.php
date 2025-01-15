@@ -5,12 +5,27 @@ class mStatusOrder extends CI_Model
 {
     public function status_order()
     {
-        $this->db->select('*');
+        $this->db->select('
+        transaksi.*, 
+        customer.nama_customer, 
+        detail_transaksi.*, 
+        produk.nama_produk, 
+        produk.gambar, 
+        size.size, 
+        custom.gambar_model, 
+        custom.qty_custom
+    ');
         $this->db->from('transaksi');
         $this->db->join('customer', 'transaksi.id_customer = customer.id_customer', 'left');
+        $this->db->join('detail_transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'left');
+        $this->db->join('size', 'detail_transaksi.id_size = size.id_size', 'left');
+        $this->db->join('produk', 'size.id_produk = produk.id_produk', 'left');
+        $this->db->join('custom', 'transaksi.id_transaksi = custom.id_transaksi', 'left');
         $this->db->where('transaksi.id_customer', $this->session->userdata('id'));
+
         return $this->db->get()->result();
     }
+
 
     public function detail_order($id)
     {

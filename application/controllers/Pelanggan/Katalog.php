@@ -158,6 +158,7 @@ class Katalog extends CI_Controller
 			'status_order' => $this->mStatusOrder->status_order(),
 			'kategori' => $this->mKelolaDataMaster->select_kategori()
 		);
+
 		$this->load->view('Pelanggan/Layouts/head');
 		$this->load->view('Pelanggan/Layouts/topend');
 		$this->load->view('Pelanggan/Layouts/categori', $data);

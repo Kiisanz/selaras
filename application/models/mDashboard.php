@@ -21,30 +21,55 @@ class mDashboard extends CI_Model
         $this->db->from('user');
         return $this->db->get()->row();
     }
+
     public function top_selling()
     {
-        return $this->db->query("SELECT SUM(qty) as total, nama_produk, harga, 
-        size FROM `detail_transaksi`
-        JOIN size ON detail_transaksi.id_size = size.id_size 
-        JOIN produk ON size.id_produk=produk.id_produk 
-        GROUP BY detail_transaksi.id_size 
-        ORDER BY total DESC")->result();
+        $data = $this->db->query("SELECT 
+                    SUM(detail_transaksi.qty) as total, 
+                    produk.nama_produk, 
+                    size.size,
+                    transaksi.ongkir, 
+                    transaksi.total_bayar - transaksi.ongkir as harga_setelah_ongkir,
+                    detail_transaksi.id_transaksi
+                FROM detail_transaksi
+                LEFT JOIN size ON detail_transaksi.id_size = size.id_size
+                LEFT JOIN produk ON size.id_produk = produk.id_produk
+                LEFT JOIN transaksi ON detail_transaksi.id_transaksi = transaksi.id_transaksi
+                GROUP BY detail_transaksi.id_size, detail_transaksi.id_transaksi
+                ORDER BY total DESC")->result();
+
+        $response = [];
+        foreach ($data as $row) {
+            $response[] = [
+                'total' => (int) $row->total,
+                'nama_produk' => $row->nama_produk,
+                'size' => $row->size,
+                'harga' => (int) $row->harga_setelah_ongkir
+            ];
+        }
+
+        return $response;
     }
+
     public function pelanggan_list()
     {
         return $this->db->query("SELECT 
-                customer.nama_customer, 
-                customer.alamat_customer, 
-                transaksi.tgl_transaksi, 
-                COUNT(transaksi.id_transaksi) as total_transaksi
-            FROM transaksi 
-            JOIN customer ON transaksi.id_customer = customer.id_customer
-            GROUP BY customer.id_customer, 
-                     transaksi.tgl_transaksi, 
-                     customer.nama_customer, 
-                     customer.alamat_customer
-            ORDER BY total_transaksi DESC
-        ")->result();
+    COALESCE(customer.nama_customer, 'Unknown') AS nama_customer, 
+    COALESCE(customer.alamat_customer, 'Unknown') AS alamat_customer, 
+    COALESCE(transaksi.tgl_transaksi, 'Unknown') AS tgl_transaksi, 
+    transaksi.id_transaksi, 
+    COUNT(transaksi.id_transaksi) AS total_transaksi
+FROM transaksi 
+LEFT JOIN customer ON transaksi.id_customer = customer.id_customer
+LEFT JOIN detail_transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi
+LEFT JOIN size ON detail_transaksi.id_size = size.id_size
+LEFT JOIN produk ON size.id_produk = produk.id_produk
+GROUP BY customer.id_customer, 
+         transaksi.tgl_transaksi, 
+         transaksi.id_transaksi, 
+         customer.nama_customer, 
+         customer.alamat_customer
+ORDER BY total_transaksi DESC")->result();
     }
 }    
 

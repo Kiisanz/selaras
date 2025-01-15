@@ -20,7 +20,7 @@
             <table class="status_order table table-bordered mb-3">
                 <thead class="bg-secondary text-dark">
                     <tr>
-                        <th>Id Transaksi</th>
+                        <th>Detail</th>
                         <th>Alamat Pengiriman</th>
                         <th>Total Pembayaran</th>
                         <th>Detail</th>
@@ -32,14 +32,47 @@
                         if ($value->status_order != '4') {
                     ?>
                             <tr>
-                                <td>No.<strong><?= $value->id_transaksi ?></strong><br>
-                                    <?php
-                                    if ($value->status_pesan == '1') {
-                                        echo '<span class="badge badge-warning">Pesanan Custom</span><br>';
-                                    }
-                                    ?>
-                                    Tgl.Order : <?= $value->tgl_transaksi ?><br>
-                                    <small><?= $value->update_at ?></small><br>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            <?php if ($value->status_pesan == '1') : ?>
+                                                <img src="<?= base_url('asset/model-baju/' . $value->gambar_model); ?>"
+                                                    alt="<?= $value->nama_produk; ?>"
+                                                    class="img-fluid rounded border"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            <?php else : ?>
+                                                <img src="<?= base_url('asset/foto-produk/' . $value->gambar); ?>"
+                                                    alt="<?= $value->nama_produk; ?>"
+                                                    class="img-fluid rounded border"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            <?php endif; ?>
+
+                                        </div>
+
+                                        <div class="ml-4">
+                                            <h5 class="mb-1"><?= $value->nama_produk; ?></h5>
+
+                                            <?php if ($value->status_pesan == '1') : ?>
+                                                <p class="mb-0 text-muted">
+                                                    Quantity: <strong><?= $value->qty_custom; ?></strong>
+                                                </p>
+                                            <?php else : ?>
+                                                <p class="mb-0 text-muted">
+                                                    Ukuran: <strong><?= $value->size; ?></strong>
+                                                </p>
+                                            <?php endif; ?>
+
+                                            <?php if ($value->status_pesan == '1') : ?>
+                                                <span class="badge bg-warning text-dark">Pesanan Custom</span>
+                                            <?php endif; ?>
+
+                                            <!-- Tanggal Order -->
+                                            <p class="mb-0 mt-2 text-muted">
+                                                Tgl. Order: <?= $value->tgl_transaksi; ?><br>
+                                                <small>Update: <?= $value->update_at; ?></small>
+                                            </p>
+                                        </div>
+                                    </div>
                                     <?php
                                     if ($value->status_order == '0') {
                                         if ($value->status_pesan == '2') {
@@ -147,7 +180,7 @@
                                         </div>
                                     <?php } ?>
                                 </td>
-                                <td>Expedisi: <strong> <?= $value->ekspedisi ?></strong><br>
+                                <td>Expedisi: <strong> <?= strtoupper($value->ekspedisi) ?></strong><br>
                                     Estimasi: <?= $value->estimasi ?><br>Alamat:
                                     <br><?= $value->alamat ?>, Kota <?= $value->kota ?> Prov. <?= $value->provinsi ?>
                                 </td>
@@ -195,14 +228,53 @@
                         if ($value->status_order == '4') { // Menampilkan pesanan yang sudah selesai
                     ?>
                             <tr>
-                                <td>No.<strong><?= $value->id_transaksi ?></strong><br>
-                                    <?php
-                                    if ($value->status_pesan == '1') {
-                                        echo '<span class="badge badge-warning">Pesanan Custom</span><br>';
-                                    }
-                                    ?>
-                                    Tgl.Order : <?= $value->tgl_transaksi ?><br>
-                                    <small><?= $value->update_at ?></small><br>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            <?php if ($value->status_pesan == '1') : ?>
+                                                <img src="<?= base_url('asset/model-baju/' . $value->gambar_model); ?>"
+                                                    alt="<?= $value->nama_produk; ?>"
+                                                    class="img-fluid rounded border"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            <?php else : ?>
+                                                <img src="<?= base_url('asset/foto-produk/' . $value->gambar); ?>"
+                                                    alt="<?= $value->nama_produk; ?>"
+                                                    class="img-fluid rounded border"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            <?php endif; ?>
+
+                                        </div>
+
+                                        <div class="ml-4">
+                                            <h5 class="mb-1"><?= $value->nama_produk; ?></h5>
+                                            <?php if ($value->status_pesan == '1') : ?>
+                                                <p class="mb-0 text-muted">
+                                                    Quantity: <strong><?= $value->qty_custom; ?></strong>
+                                                </p>
+                                            <?php else : ?>
+                                                <p class="mb-0 text-muted">
+                                                    Ukuran: <strong><?= $value->size; ?></strong>
+                                                </p>
+                                            <?php endif; ?>
+
+                                            <?php if ($value->status_pesan == '1') : ?>
+                                                <span class="badge bg-warning text-dark">Pesanan Custom</span>
+                                            <?php endif; ?>
+
+                                            <small><?= $value->update_at ?></small><br>
+                                            <?php
+                                            if ($value->status_pesan == '1') {
+                                                echo '<span class="badge badge-warning">Pesanan Custom</span><br>';
+                                            }
+                                            ?>
+                                            <!-- Tanggal Order -->
+                                            <p class="mb-0 mt-2 text-muted">
+                                                Tgl. Order: <?= $value->tgl_transaksi; ?><br>
+                                                <small>Update: <?= $value->update_at; ?></small>
+                                            </p>
+                                        </div>
+                                    </div>
+
                                     <?php
                                     if ($value->status_order == '0') {
                                         if ($value->status_pesan == '2') {

@@ -15,12 +15,14 @@ class Transaksi extends CI_Controller
 		$data = array(
 			'pesanan' => $this->mTransaksi->pesanan_masuk()
 		);
+
 		$this->load->view('Admin/layouts/head');
 		$this->load->view('Admin/layouts/header');
 		$this->load->view('Admin/layouts/aside', $data);
 		$this->load->view('Admin/Transaksi/pembayaran', $data);
 		$this->load->view('Admin/layouts/footer');
 	}
+
 	public function konfirmasi_pembayaran()
 	{
 		$this->protect->protect_admin();

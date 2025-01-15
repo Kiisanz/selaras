@@ -9,7 +9,7 @@ class mKatalog extends CI_Model
         $this->db->from('produk');
         $this->db->join('size', 'produk.id_produk = size.id_produk', 'left');
         $this->db->join('diskon', 'diskon.id_produk = produk.id_produk', 'left');
-        // Removed GROUP BY to avoid the error
+        $this->db->group_by('size.id_produk');
         return $this->db->get()->result();
     }
 
@@ -29,7 +29,7 @@ class mKatalog extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('produk');
-        $this->db->where('id_kategori', $id_kategori);  // Filter by category
+        $this->db->where('id_kategori', $id_kategori);
         $query = $this->db->get();
         return $query->result();
     }
